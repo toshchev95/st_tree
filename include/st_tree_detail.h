@@ -66,7 +66,7 @@ struct max_maintainer {
         return *this;
     }
 
-    Unsigned max() const { return _max; }
+    Unsigned Max() const { return _max; }
 
     void insert(const Unsigned& n) {
         if (n >= _hist.size()) _hist.resize(1+n, 0);

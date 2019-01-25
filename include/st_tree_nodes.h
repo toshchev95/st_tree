@@ -114,7 +114,7 @@ struct node_base {
         return *(q->_tree);
     }
 
-    size_type depth() const { return _depth.max(); }
+    size_type depth() const { return _depth.Max(); }
     size_type subtree_size() const { return _size; }
 
     bool is_root() const { return NULL == _parent; }
@@ -364,8 +364,8 @@ struct node_raw: public node_base<Tree, node_raw<Tree, Data>, vector<node_raw<Tr
         node_type* ra = qa;
         node_type* rb = qb;
 
-        node_type* pa; if (!a.is_root()) pa = a._parent;
-        node_type* pb; if (!b.is_root()) pb = b._parent;
+        node_type* pa = nullptr; if (!a.is_root()) pa = a._parent;
+        node_type* pb = nullptr; if (!b.is_root()) pb = b._parent;
 
         if (ira) ta->_prune(ra);   else pa->_prune(ra);
         if (irb) tb->_prune(rb);   else pb->_prune(rb);
@@ -539,7 +539,7 @@ struct node_ordered: public node_base<Tree, node_ordered<Tree, Data, Compare>, m
         bool ancestor = this->is_ancestor(rhs);
         if (ancestor) base_type::_excise(r);
 
-        node_type* p;
+        node_type* p = nullptr;
         if (!this->is_root()) {
             p = this->_parent;
             cs_iterator tt = node_type::_cs_iterator(*this);
@@ -822,6 +822,8 @@ struct node_keyed: public node_base<Tree, node_keyed<Tree, Data, Key, Compare>, 
     data_type& data() { return this->_data; }
     const data_type& data() const { return this->_data; }
 
+    // before replace keys you must free memory of previous key
+    void key(const key_type& key) { this->_key = key; }
     // keys are const access only
     const key_type& key() const { return this->_key; }
 
