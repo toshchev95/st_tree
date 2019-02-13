@@ -130,6 +130,9 @@ struct node_base {
         return false;
     }
 
+    node_type* parent_ptr() {
+        return _parent;
+    }
     node_type& parent() {
         if (is_root()) throw parent_exception("parent(): node has no parent");
         return *(_parent);
